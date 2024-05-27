@@ -33,10 +33,10 @@
       </column>
       <column name="description" type="VARCHAR(255)"/>
       <column name="variants" type="BLOB"/>
-      <column name="examination_id" type="UUID">
+      <column name="examination_id" type="VARCHAR(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="picture_id" type="UUID"/>
+      <column name="picture_id" type="VARCHAR(255)"/>
     </createTable>
   </changeSet>
 
@@ -88,7 +88,7 @@
 
     <createTable tableName="examination_results">
       <column name="id"
-        type="UUID">
+        type="VARCHAR(255)">
         <constraints nullable="false"
           primaryKey="true"
           primaryKeyName="pk_examination_results"/>
@@ -104,5 +104,23 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+  </changeSet>
+
+  <changeSet id="9" author="OLDx21">
+    <addForeignKeyConstraint baseColumnNames="teacher_id" baseTableName="examinations"
+      constraintName="FK_EXAMINATIONS_ON_USERS" referencedColumnNames="id"
+      referencedTableName="users"/>
+  </changeSet>
+
+  <changeSet id="10" author="OLDx21">
+    <addForeignKeyConstraint baseColumnNames="examination_id" baseTableName="examination_results"
+      constraintName="FK_EXAMINATION_RESULTS_ON_EXAMINATION" referencedColumnNames="id"
+      referencedTableName="examinations"/>
+  </changeSet>
+
+  <changeSet id="11" author="OLDx21">
+    <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="examination_results"
+      constraintName="FK_EXAMINATION_RESULTS_ON_USERS" referencedColumnNames="id"
+      referencedTableName="users"/>
   </changeSet>
 </databaseChangeLog>

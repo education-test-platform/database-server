@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class Assigment {
   @Embeddable
   @AllArgsConstructor
   @NoArgsConstructor
-  public static class AssigmentId {
+  public static class AssigmentId implements Serializable {
 
     @Column(name = "teacher_id")
     private String teacherId;

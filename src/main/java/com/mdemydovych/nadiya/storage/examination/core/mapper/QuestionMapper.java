@@ -11,9 +11,7 @@ import com.mdemydovych.nadiya.storage.examination.core.domain.Question;
 import com.mdemydovych.nadiya.storage.utils.ZipUtils;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -37,7 +35,7 @@ class QuestionMapper {
   @SneakyThrows
   private Question toEntity(QuestionDto dto, Examination examination) {
     Question question = new Question();
-    question.setId(Objects.nonNull(dto.getId()) ? UUID.fromString(dto.getId()) : null);
+    question.setId(dto.getId());
     question.setDescription(dto.getDescription());
     question.setExamination(examination);
     question.setVariants(ZipUtils.zipText(objectMapper.writeValueAsString(dto.getVariants())));

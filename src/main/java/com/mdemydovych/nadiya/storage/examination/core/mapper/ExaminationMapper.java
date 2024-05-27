@@ -5,10 +5,10 @@ import com.mdemydovych.nadiya.model.examination.core.ExaminationDto;
 import com.mdemydovych.nadiya.model.examination.core.QuestionDto;
 import com.mdemydovych.nadiya.storage.examination.core.domain.Examination;
 import com.mdemydovych.nadiya.storage.examination.core.domain.Question;
+import com.mdemydovych.nadiya.storage.user.UserMapper;
+import com.mdemydovych.nadiya.storage.user.domain.User;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +18,18 @@ public class ExaminationMapper {
 
   private final QuestionMapper questionMapper;
 
+  private final UserMapper userMapper;
+
   public Examination toEntity(ExaminationDto dto) {
     Examination examination = new Examination();
-    examination.setId(Objects.nonNull(dto.getId()) ? UUID.fromString(dto.getId()) : null);
+    examination.setId(dto.getId());
     examination.setTitle(dto.getTitle());
-    examination.setTeacherId(dto.getTeacherId());
     examination.setCreated(new Date());
     Set<Question> questions = questionMapper.toEntity(dto.getQuestions(), examination);
     examination.setQuestions(questions);
+    User user = new User();
+    user.setId(dto.getTeacher().getId());
+    examination.setTeacher(user);
     return examination;
   }
 
@@ -33,7 +37,7 @@ public class ExaminationMapper {
     ExaminationDto result = new ExaminationDto();
     result.setId(examination.getId().toString());
     result.setTitle(examination.getTitle());
-    result.setTeacherId(examination.getTeacherId());
+    result.setTeacher(userMapper.toDto(examination.getTeacher()));
     Set<QuestionDto> questions = questionMapper.toDto(examination.getQuestions());
     result.setQuestions(questions);
     return result;

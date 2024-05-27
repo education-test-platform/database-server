@@ -7,10 +7,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
 
 @Getter
 @Setter
@@ -18,7 +16,7 @@ import org.hibernate.annotations.UuidGenerator;
 public class User {
 
   @Id
-  private UUID id;
+  private String id;
 
   private String username;
 

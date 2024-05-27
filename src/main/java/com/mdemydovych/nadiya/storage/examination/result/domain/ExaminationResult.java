@@ -1,13 +1,14 @@
 package com.mdemydovych.nadiya.storage.examination.result.domain;
 
-import jakarta.persistence.Column;
+import com.mdemydovych.nadiya.storage.examination.core.domain.Examination;
+import com.mdemydovych.nadiya.storage.user.domain.User;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.UuidGenerator;
 
 @Getter
 @Setter
@@ -15,16 +16,18 @@ import org.hibernate.type.SqlTypes;
 public class ExaminationResult {
 
   @Id
-  @GeneratedValue
-  @JdbcTypeCode(SqlTypes.VARCHAR)
+  @UuidGenerator
+  private String id;
 
-  @Column(name = "student_id")
-  private String studentId;
+  @ManyToOne
+  @JoinColumn(name = "student_id", nullable = false)
+  private User student;
 
   private String score;
 
   private byte[] answers;
 
-  @Column(name = "examination_id", nullable = false)
-  private String examinationId;
+  @ManyToOne
+  @JoinColumn(name = "examination_id", nullable = false)
+  private Examination examination;
 }

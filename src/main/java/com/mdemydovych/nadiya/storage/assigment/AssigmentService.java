@@ -1,12 +1,12 @@
 package com.mdemydovych.nadiya.storage.assigment;
 
 
+import com.mdemydovych.nadiya.model.request.AssignStudentRequest;
 import com.mdemydovych.nadiya.model.user.UserDto;
 import com.mdemydovych.nadiya.storage.assigment.domain.Assigment;
 import com.mdemydovych.nadiya.storage.assigment.domain.Assigment.AssigmentId;
 import com.mdemydovych.nadiya.storage.user.UserService;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,9 +19,9 @@ public class AssigmentService {
 
   private final UserService userService;
 
-  public void assignStudentToTeacher(String teacherId, String studentId) {
+  public void assignStudentToTeacher(AssignStudentRequest request) {
     Assigment assigment = new Assigment();
-    assigment.setId(new AssigmentId(teacherId, studentId));
+    assigment.setId(new AssigmentId(request.teacherId(), request.studentId()));
     assigmentRepository.save(assigment);
   }
 
@@ -35,12 +35,11 @@ public class AssigmentService {
     return userService.findByIds(extractIds(assigment, AssigmentId::getStudentId));
   }
 
-  private List<UUID> extractIds(List<Assigment> assigments,
+  private List<String> extractIds(List<Assigment> assigments,
       Function<AssigmentId, String> function) {
     return assigments.stream()
         .map(Assigment::getId)
         .map(function)
-        .map(UUID::fromString)
         .toList();
   }
 }

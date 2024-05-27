@@ -2,14 +2,11 @@ package com.mdemydovych.nadiya.storage.examination.core.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
-import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.UuidGenerator;
 
 @Getter
 @Setter
@@ -17,9 +14,8 @@ import org.hibernate.type.SqlTypes;
 public class Picture {
 
   @Id
-  @GeneratedValue
-  @JdbcTypeCode(SqlTypes.VARCHAR)
-  private UUID id;
+  @UuidGenerator
+  private String id;
 
   private byte[] picture;
 

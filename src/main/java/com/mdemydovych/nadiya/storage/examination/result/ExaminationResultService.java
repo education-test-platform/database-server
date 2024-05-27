@@ -2,6 +2,7 @@ package com.mdemydovych.nadiya.storage.examination.result;
 
 import com.mdemydovych.nadiya.model.examination.result.ExaminationResultDto;
 import com.mdemydovych.nadiya.storage.examination.result.domain.ExaminationResult;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,19 @@ public class ExaminationResultService {
     return repository.findByStudentIdAndExaminationId(studentId, examId)
         .map(mapper::toDto)
         .orElse(null);
+  }
+
+  public List<ExaminationResultDto> findAllStudentExamResults(String studentId) {
+    return repository.findAllByStudentId(studentId)
+        .stream()
+        .map(mapper::toDto)
+        .toList();
+  }
+
+  public List<ExaminationResultDto> findAllExaminationResults(String examId) {
+    return repository.findAllByExamination_Id(examId)
+        .stream()
+        .map(mapper::toDto)
+        .toList();
   }
 }

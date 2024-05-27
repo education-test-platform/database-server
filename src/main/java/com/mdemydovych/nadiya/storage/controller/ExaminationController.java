@@ -32,4 +32,9 @@ public class ExaminationController {
   public List<ExaminationDto> findByTeacherId(@PathVariable String id) {
     return examinationService.findByTeacher(id);
   }
+
+  @GetMapping("/find/active/student/{id}")
+  public List<ExaminationDto> findActiveStudentExams(@PathVariable String id) {
+    return examinationService.findActiveStudentExams(id);
+  }
 }

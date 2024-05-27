@@ -5,7 +5,6 @@ import com.mdemydovych.nadiya.storage.examination.core.domain.Examination;
 import com.mdemydovych.nadiya.storage.examination.core.exception.ExaminationNotFoundException;
 import com.mdemydovych.nadiya.storage.examination.core.mapper.ExaminationMapper;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +23,22 @@ public class ExaminationService {
   }
 
   public List<ExaminationDto> findByTeacher(String teacherId) {
-    return repository.findByTeacherId(teacherId)
+    return repository.findByTeacher_Id(teacherId)
         .stream()
         .map(mapper::toDto)
         .toList();
   }
 
+  public List<ExaminationDto> findActiveStudentExams(String studentId) {
+    return repository.findActiveStudentExams(studentId)
+        .stream()
+        .map(mapper::toDto)
+        .toList();
+  }
+
+
   public ExaminationDto findById(String id) {
-    return repository.findById(UUID.fromString(id))
+    return repository.findById(id)
         .map(mapper::toDto)
         .orElseThrow(() -> new ExaminationNotFoundException("Examination not found"));
   }
