@@ -32,6 +32,8 @@ public class Examination {
   @Column(updatable = false)
   private Date created;
 
+  private boolean opened;
+
   @OneToMany(mappedBy = "examination", cascade = CascadeType.ALL)
   private Set<Question> questions;
 }

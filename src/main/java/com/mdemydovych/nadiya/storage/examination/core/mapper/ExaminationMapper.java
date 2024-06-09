@@ -25,6 +25,7 @@ public class ExaminationMapper {
     examination.setId(dto.getId());
     examination.setTitle(dto.getTitle());
     examination.setCreated(new Date());
+    examination.setOpened(dto.isEnabled());
     Set<Question> questions = questionMapper.toEntity(dto.getQuestions(), examination);
     examination.setQuestions(questions);
     User user = new User();
@@ -35,8 +36,9 @@ public class ExaminationMapper {
 
   public ExaminationDto toDto(Examination examination) {
     ExaminationDto result = new ExaminationDto();
-    result.setId(examination.getId().toString());
+    result.setId(examination.getId());
     result.setTitle(examination.getTitle());
+    result.setEnabled(examination.isOpened());
     result.setTeacher(userMapper.toDto(examination.getTeacher()));
     Set<QuestionDto> questions = questionMapper.toDto(examination.getQuestions());
     result.setQuestions(questions);

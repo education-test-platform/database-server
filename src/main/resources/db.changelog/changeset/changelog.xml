@@ -123,4 +123,10 @@
       constraintName="FK_EXAMINATION_RESULTS_ON_USERS" referencedColumnNames="id"
       referencedTableName="users"/>
   </changeSet>
+
+  <changeSet id="12" author="OLDx21">
+    <addColumn tableName="examinations">
+      <column name="opened" type="BOOLEAN"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
